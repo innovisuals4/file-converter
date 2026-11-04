@@ -18,7 +18,7 @@ export default async function ConvertPage({ params, searchParams }: PageProps) {
       from={pair.from}
       to={pair.to}
       initialTo={search.to ?? pair.to}
-      route={route}
+      route={{ note: route?.note }}
     />
   );
 }
