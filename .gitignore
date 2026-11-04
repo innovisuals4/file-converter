@@ -65,3 +65,4 @@ build/
 *.temp
 temp/
 tmp/
+.vercel
