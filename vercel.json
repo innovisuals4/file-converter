@@ -4,6 +4,7 @@
   "installCommand": "npm install",
   "framework": "nextjs",
   "outputDirectory": ".next",
+  "rootDirectory": "transmute",
   "regions": ["iad1"],
   "functions": {
     "src/app/api/**/*.ts": {
