@@ -10,12 +10,12 @@ import {
   routesGroupedByFrom,
   tabForCategory,
   TOOL_TABS,
-  STATS,
   type FormatDef,
 } from "@/lib/registry";
 import { ExtBadge, FormatIcon } from "@/lib/format-icons";
-import { buttonClasses } from "@/components/ui";
+import { Button, buttonClasses } from "@/components/ui";
 import { cn } from "@/lib/cn";
+import { Section, SectionHeading } from "@/components/motion-primitives";
 
 export interface ToolDirItem {
   from: FormatDef;
@@ -28,10 +28,6 @@ export interface ToolGroup {
   items: ToolDirItem[];
 }
 
-/**
- * Build the full conversion directory from the registry: one item per
- * supported route, bucketed by input format.
- */
 export function buildToolGroups(): ToolGroup[] {
   const map = new Map<string, ToolDirItem[]>();
   for (const g of routesGroupedByFrom()) {
@@ -44,9 +40,6 @@ export function buildToolGroups(): ToolGroup[] {
     });
     map.set(fromFmt.id, items.filter((x): x is ToolDirItem => x !== null));
   }
-  // Merge all formats that share a category into a single group.
-  // Grouping by format ID created duplicate category labels (e.g. 10× "IMAGES"),
-  // which broke React key reconciliation and made tab filtering not work.
   const categoryMap = new Map<string, ToolDirItem[]>();
   for (const [fromId, items] of map.entries()) {
     const f = formatById(fromId)!;
@@ -63,16 +56,11 @@ export function buildToolGroups(): ToolGroup[] {
   return groups;
 }
 
-/** Tab bucket for a category id. */
 export function tabForFormatId(formatId: string | undefined): string {
   const f = formatId ? formatById(formatId) : null;
   if (!f) return "other";
   return tabForCategory(f.category);
 }
-
-/* ------------------------------------------------------------------ */
-/* UI pieces                                                           */
-/* ------------------------------------------------------------------ */
 
 export function ToolTab({ id, label, active, onSelect }: { id: string; label: string; active: boolean; onSelect: (id: string) => void }) {
   return (
@@ -81,10 +69,10 @@ export function ToolTab({ id, label, active, onSelect }: { id: string; label: st
       onClick={() => onSelect(id)}
       aria-pressed={active}
       className={cn(
-        "h-10 px-3 rounded-xl flex items-center gap-2 text-[12px] font-medium transition-all duration-300",
+        "h-10 px-3.5 rounded-xl flex items-center gap-2 text-[12px] font-medium transition-all duration-300",
         active
-          ? "bg-gradient-to-br from-violet-600 to-indigo-500 text-white shadow-[0_10px_28px_-8px_rgba(139,92,246,0.55)]"
-          : "text-muted hover:text-ink hover:bg-surface-2/60 hover:border-brand/20",
+          ? "bg-gradient-to-br from-brand to-brand-strong text-white shadow-lg"
+          : "text-muted hover:text-ink hover:bg-surface-2/80 hover:border-brand/20 border-transparent",
       )}
     >
       <span className={`h-2 w-2 rounded-full ${active ? "bg-white" : "transparent"}`} />
@@ -101,10 +89,10 @@ export function ToolCard({ from, to }: { from: string; to: string }) {
     <a
       href={`/convert/${from}-to-${to}`}
       className={cn(
-        "block rounded-xl border border-line bg-surface p-4 hover:border-brand/40 hover:shadow-[0_14px_38px_-14px_rgba(139,92,246,0.35)] transition-all duration-300",
+        "block rounded-2xl border border-line surface-card p-5 card-hover hover:border-brand/50 transition-all duration-300",
       )}
     >
-      <div className="flex items-center justify-between gap-2 mb-2">
+      <div className="flex items-center justify-between gap-2 mb-3">
         <FormatIcon formatId={f.id} size="sm" className="shrink-0" />
         <ArrowRightMini className="h-3.5 w-3.5 shrink-0 text-brand-strong" />
         <FormatIcon formatId={t.id} size="sm" className="shrink-0" />
@@ -125,10 +113,6 @@ function ArrowRightMini({ className }: { className?: string }) {
     </svg>
   );
 }
-
-/* ------------------------------------------------------------------ */
-/* Full tools directory (page-level)                                   */
-/* ------------------------------------------------------------------ */
 
 export function ToolsDirectory({ initialCategory }: { initialCategory?: string }) {
   const [tab, setTab] = useState<string>(initialCategory ?? "all");
@@ -163,10 +147,16 @@ export function ToolsDirectory({ initialCategory }: { initialCategory?: string }
   const reduce = useReducedMotion();
 
   return (
-    <div className="space-y-8">
-      {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div className="flex max-w-[420px] items-center gap-2 rounded-xl border border-line bg-surface px-3 py-2.5">
+    <Section>
+      <SectionHeading
+        eyebrow="Conversion directory"
+        title="Browse every conversion"
+        copy="Searchable directory of every supported format pair. Pick a category, search for your conversion, and go straight to the workspace."
+        align="center"
+      />
+
+      <div className="mt-14 flex flex-wrap items-center justify-between gap-4">
+        <div className="flex max-w-[420px] items-center gap-2 rounded-xl border border-line surface-card px-3 py-3">
           <Search className="h-4 w-4 shrink-0 text-faint" />
           <input
             value={query}
@@ -189,24 +179,22 @@ export function ToolsDirectory({ initialCategory }: { initialCategory?: string }
         </div>
       </div>
 
-      {/* Empty state */}
       {filteredGroups.length === 0 && (
-        <div className="glass rounded-3xl p-12 text-center border border-line">
-          <div className="inline-flex items-center justify-center rounded-full h-14 w-14 bg-brand-soft mb-4">
-            <Search className="h-7 w-7 text-brand-strong" />
+        <div className="mt-12 glass rounded-3xl p-12 text-center border border-line">
+          <div className="inline-flex items-center justify-center rounded-full h-16 w-16 bg-brand-soft mb-5">
+            <Search className="h-8 w-8 text-brand-strong" />
           </div>
           <h3 className="mb-2 text-lg font-semibold text-ink">No results</h3>
           <p className="text-muted">
             {query ? `“{query}”` : ""} didn’t match any supported conversion.
           </p>
-          <button onClick={() => setQuery("")} className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-brand-strong hover:underline">
+          <Button variant="ghost" size="sm" onClick={() => setQuery("")} className="mt-4">
             Clear search
-          </button>
+          </Button>
         </div>
       )}
 
-      {/* Groups */}
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         <AnimatePresence>
           {filteredGroups.map((g) => (
             <motion.div
@@ -214,14 +202,14 @@ export function ToolsDirectory({ initialCategory }: { initialCategory?: string }
               initial={reduce ? false : { opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -6 }}
-              className="rounded-xl border border-line bg-surface p-5 sm:p-6"
+              className="surface-card rounded-3xl p-6 sm:p-8 card-hover"
             >
-              <div className="flex items-center gap-2 mb-4">
-                <div className="h-2 w-2 rounded-full bg-gradient-to-r from-violet-500 to-sky-400" />
+              <div className="flex items-center gap-2 mb-5">
+                <div className="h-2 w-2 rounded-full bg-gradient-to-r from-brand to-accent" />
                 <h3 className="text-sm font-semibold uppercase tracking-[0.12em] text-muted">{g.label}</h3>
                 <span className="ml-auto text-[11px] font-medium text-faint">{g.items.length} conversions</span>
               </div>
-              <div className="grid gap-2">
+              <div className="grid gap-3">
                 {g.items.map((item) => (
                   <ToolCard key={`${item.from.id}-to-${item.to.id}`} from={item.from.id} to={item.to.id} />
                 ))}
@@ -230,41 +218,31 @@ export function ToolsDirectory({ initialCategory }: { initialCategory?: string }
           ))}
         </AnimatePresence>
       </div>
-    </div>
+    </Section>
   );
 }
 
-/* ------------------------------------------------------------------ */
-/* Homepage-lite: category shortcut grid                              */
-/* ------------------------------------------------------------------ */
-
 export function ToolsCategoryShortcuts() {
   return (
-    <section className="py-16 lg:pt-20 lg:pb-28 border-t border-line/40">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl text-center mb-12">
-          <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 text-[12px] font-medium uppercase tracking-[0.14em] text-muted">
-            <span className="h-1.5 w-1.5 rounded-full bg-gradient-to-r from-violet-500 to-sky-400" />
-            Browse all tools
-          </span>
-          <h2 className="font-display text-[clamp(1.75rem,3vw,2.2rem)] font-semibold leading-[1.12] tracking-[-0.025em] text-ink">Browse every conversion</h2>
-          <p className="mt-4 text-muted">
-            Searchable directory of {STATS.conversions} supported format paths across {STATS.categories} categories.
-          </p>
-        </div>
+    <Section>
+      <SectionHeading
+        eyebrow="Browse all tools"
+        title="Browse every conversion"
+        copy="Searchable directory of supported format paths across categories."
+        align="center"
+      />
 
-        <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6">
-          {[...TOOL_TABS].slice(1).map((t) => (
-            <Link
-              key={t.id}
-              href={`/tools?category=${t.id}`}
-              className={buttonClasses("secondary", "md")}
-            >
-              {t.label}
-            </Link>
-          ))}
-        </div>
+      <div className="mt-14 grid gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+        {[...TOOL_TABS].slice(1).map((t) => (
+          <Link
+            key={t.id}
+            href={`/tools?category=${t.id}`}
+            className={buttonClasses("secondary", "md")}
+          >
+            {t.label}
+          </Link>
+        ))}
       </div>
-    </section>
+    </Section>
   );
 }

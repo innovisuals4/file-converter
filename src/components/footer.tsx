@@ -15,24 +15,23 @@ const CATEGORY_LINKS = [
 
 export function Footer() {
   return (
-    <footer className="border-t border-line bg-bg-elev">
-      <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
-        <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
+    <footer className="border-t border-line bg-surface">
+      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+        <div className="grid gap-12 md:grid-cols-[1.5fr_1fr_1fr_1fr]">
           <div>
             <Logo />
-            <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted">
-              The all-in-one file converter. {STATS.formats} formats,{" "}
-              {STATS.conversions}+ conversion paths — fast, free and privacy-first.
+            <p className="mt-5 max-w-xs text-sm leading-relaxed text-muted">
+              {`The all-in-one file converter. ${STATS.formats} formats, ${STATS.conversions}+ conversion paths — fast, free and privacy-first.`}
             </p>
-            <p className="mt-5 inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1.5 text-[12px] text-muted">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-              Files are processed in memory & auto-deleted
+            <p className="mt-6 inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1.5 text-[12px] text-muted">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+              Files processed in memory & auto-deleted
             </p>
           </div>
 
           <nav aria-label="Popular conversions">
-            <h3 className="mb-4 text-[13px] font-semibold uppercase tracking-[0.12em] text-faint">Popular</h3>
-            <ul className="space-y-2.5">
+            <h3 className="mb-4 text-[12px] font-semibold uppercase tracking-[0.14em] text-faint">Popular</h3>
+            <ul className="space-y-3">
               {POPULAR.map((p) => (
                 <li key={p.title}>
                   <Link
@@ -47,8 +46,8 @@ export function Footer() {
           </nav>
 
           <nav aria-label="Categories">
-            <h3 className="mb-4 text-[13px] font-semibold uppercase tracking-[0.12em] text-faint">Categories</h3>
-            <ul className="space-y-2.5">
+            <h3 className="mb-4 text-[12px] font-semibold uppercase tracking-[0.14em] text-faint">Categories</h3>
+            <ul className="space-y-3">
               {CATEGORY_LINKS.map((c) => (
                 <li key={c.label}>
                   <Link href={c.href} className="text-sm text-muted transition-colors hover:text-ink">
@@ -60,8 +59,8 @@ export function Footer() {
           </nav>
 
           <nav aria-label="Resources">
-            <h3 className="mb-4 text-[13px] font-semibold uppercase tracking-[0.12em] text-faint">Resources</h3>
-            <ul className="space-y-2.5">
+            <h3 className="mb-4 text-[12px] font-semibold uppercase tracking-[0.14em] text-faint">Resources</h3>
+            <ul className="space-y-3">
               <li><Link href="/privacy" className="text-sm text-muted transition-colors hover:text-ink">Privacy Policy</Link></li>
               <li><Link href="/terms" className="text-sm text-muted transition-colors hover:text-ink">Terms of Service</Link></li>
               <li><Link href="/tools" className="text-sm text-muted transition-colors hover:text-ink">All Converters</Link></li>
@@ -74,7 +73,7 @@ export function Footer() {
           </nav>
         </div>
 
-        <div className="mt-12 flex flex-col items-start justify-between gap-3 border-t border-line pt-6 text-[13px] text-faint sm:flex-row sm:items-center">
+        <div className="mt-16 flex flex-col items-start justify-between gap-4 border-t border-line pt-8 text-[12px] text-faint sm:flex-row sm:items-center">
           <p>© {new Date().getFullYear()} Transmute Labs. All rights reserved.</p>
           <p>Built with care — no files are ever stored on our servers.</p>
         </div>

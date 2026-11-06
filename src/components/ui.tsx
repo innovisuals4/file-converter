@@ -5,10 +5,10 @@ type ButtonSize = "md" | "lg" | "sm";
 
 const VARIANTS: Record<ButtonVariant, string> = {
   primary:
-    "text-white bg-gradient-to-br from-violet-600 via-indigo-600 to-indigo-500 shadow-[0_10px_36px_-10px_rgba(139,92,246,0.55)] hover:shadow-[0_16px_44px_-10px_rgba(139,92,246,0.65)] hover:brightness-[1.08] active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none",
+    "text-white bg-gradient-to-br from-brand via-brand-strong to-accent shadow-[0_10px_30px_-8px_rgba(99,102,241,0.45)] hover:shadow-[0_16px_40px_-10px_rgba(99,102,241,0.55)] hover:brightness-[1.05] active:scale-[0.97] disabled:opacity-50 disabled:pointer-events-none",
   secondary:
-    "border border-line-strong bg-surface text-muted hover:text-ink hover:border-brand/50 hover:shadow-[0_10px_32px_-16px_var(--glow)] active:scale-[0.98] disabled:opacity-50 disabled:pointer-events-none",
-  ghost: "text-muted hover:text-ink active:scale-[0.98]",
+    "border border-line-strong bg-surface text-muted hover:text-ink hover:border-brand/40 hover:bg-surface-2/80 active:scale-[0.97] disabled:opacity-50 disabled:pointer-events-none",
+  ghost: "text-muted hover:text-ink active:scale-[0.97]",
 };
 
 const SIZES: Record<ButtonSize, string> = {
@@ -42,4 +42,18 @@ interface LinkButtonProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> 
 
 export function LinkButton({ variant = "primary", size = "md", className, ...props }: LinkButtonProps) {
   return <a {...props} className={buttonClasses(variant, size, className)} />;
+}
+
+export function Card({ className, children }: { className?: string; children: React.ReactNode }) {
+  return (
+    <div className={cn("surface-card rounded-3xl p-6 sm:p-8 card-hover", className)}>{children}</div>
+  );
+}
+
+export function Badge({ className, children }: { className?: string; children: React.ReactNode }) {
+  return (
+    <span className={cn("inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-[11px] font-medium border-line bg-surface-2/50", className)}>
+      {children}
+    </span>
+  );
 }

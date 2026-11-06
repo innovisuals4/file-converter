@@ -30,7 +30,7 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // eslint-disable-next-line react-hooks/set-state-in-effect -- Close mobile nav on route change (navigation side-effect)
+  // eslint-disable-next-line react-hooks/set-state-in-effect -- Close mobile nav on route change
   useEffect(() => setOpen(false), [pathname]);
 
   return (
@@ -38,16 +38,13 @@ export function Navbar() {
       <div
         className={cn(
           "transition-all duration-500",
-          scrolled ? "glass shadow-[0_8px_32px_-16px_rgba(0,0,0,0.35)]" : "border-b border-transparent bg-transparent",
+          scrolled ? "glass shadow-lg" : "border-b border-transparent bg-transparent",
         )}
       >
-        <nav
-          aria-label="Main"
-          className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6"
-        >
+        <nav aria-label="Main" className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6">
           <Logo />
 
-          <ul className="hidden items-center gap-1 lg:flex">
+          <ul className="hidden items-center gap-2 lg:flex">
             {LINKS.map((link) => {
               const isRoot = link.href === "/";
               const active = isRoot ? pathname === "/" : pathname === link.href.split("?")[0];
@@ -56,8 +53,8 @@ export function Navbar() {
                   <Link
                     href={link.href}
                     className={cn(
-                      "rounded-lg px-3 py-2 text-[13.5px] font-medium transition-colors",
-                      active ? "text-ink" : "text-muted hover:text-ink",
+                      "px-3 py-2 text-[13.5px] font-medium transition-colors",
+                      active ? "text-brand-strong" : "text-muted hover:text-ink",
                     )}
                   >
                     {link.label}
@@ -75,7 +72,7 @@ export function Navbar() {
             </LinkButton>
             <button
               type="button"
-              className="inline-flex h-9 w-9 items-center justify-center rounded-[10px] border border-line text-muted lg:hidden"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-line text-muted lg:hidden"
               aria-expanded={open}
               aria-controls="mobile-nav"
               aria-label="Toggle navigation menu"
@@ -95,14 +92,14 @@ export function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
-            className="glass mx-4 mt-2 overflow-hidden rounded-2xl lg:hidden"
+            className="glass mx-4 mt-2 overflow-hidden rounded-2xl lg:hidden border border-line"
           >
             <ul className="p-3">
               {LINKS.map((link) => (
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="block rounded-xl px-4 py-3 text-[15px] font-medium text-muted transition-colors hover:bg-brand-soft hover:text-ink"
+                    className="block rounded-xl px-4 py-3 text-[15px] font-medium text-muted transition-colors hover:bg-surface-2/80 hover:text-ink"
                   >
                     {link.label}
                   </Link>
