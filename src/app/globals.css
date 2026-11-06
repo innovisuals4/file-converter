@@ -6,32 +6,33 @@
 /* Design tokens — Neon Studio                                        */
 /* ------------------------------------------------------------------ */
 
+/* Light theme (default, applied when .dark is absent) */
 :root {
-  /* Dark-first neon palette */
-  --bg: #050508;
-  --bg-elev: #0a0a12;
-  --surface: #11111b;
-  --surface-2: #1a1a2e;
-  --line: rgba(255, 255, 255, 0.08);
-  --line-strong: rgba(255, 255, 255, 0.14);
-  --ink: #ffffff;
-  --muted: #94a3b8;
-  --faint: #475569;
-  --brand: #00f3ff;      /* electric cyan */
+  --bg: #f8fafc;
+  --bg-elev: #ffffff;
+  --surface: #f1f5f9;
+  --surface-2: #e2e8f0;
+  --line: rgba(148, 163, 184, 0.2);
+  --line-strong: rgba(148, 163, 184, 0.3);
+  --ink: #0f172a;
+  --muted: #64748b;
+  --faint: #94a3b8;
+  --brand: #00f3ff;
   --brand-strong: #00c4e8;
-  --brand-soft: rgba(0, 243, 255, 0.15);
-  --accent: #ff00ff;     /* magenta */
+  --brand-soft: rgba(0, 243, 255, 0.12);
+  --accent: #ff00ff;
   --accent-strong: #d400d4;
-  --accent-soft: rgba(255, 0, 255, 0.15);
-  --glass: rgba(15, 15, 25, 0.55);
-  --glass-border: rgba(255, 255, 255, 0.1);
-  --glow: rgba(0, 243, 255, 0.35);
-  --hero-orb-1: rgba(0, 243, 255, 0.18);
-  --hero-orb-2: rgba(255, 0, 255, 0.12);
-  --hero-orb-3: rgba(204, 255, 0, 0.1);
-  color-scheme: dark;
+  --accent-soft: rgba(255, 0, 255, 0.12);
+  --glass: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(148, 163, 184, 0.2);
+  --glow: rgba(0, 243, 255, 0.25);
+  --hero-orb-1: rgba(0, 243, 255, 0.12);
+  --hero-orb-2: rgba(255, 0, 255, 0.1);
+  --hero-orb-3: rgba(204, 255, 0, 0.08);
+  color-scheme: light;
 }
 
+/* Dark theme (applied when .dark is present) */
 .dark {
   --bg: #050508;
   --bg-elev: #0a0a12;
