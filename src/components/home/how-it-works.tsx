@@ -13,7 +13,7 @@ const STEPS = [
     num: "02",
     icon: FormatSelector,
     title: "Choose your format",
-    body: "Pick any supported output format. We’ll only show valid conversions.",
+    body: "Pick any supported output format. We'll only show valid conversions.",
   },
   {
     num: "03",

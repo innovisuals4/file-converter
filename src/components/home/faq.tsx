@@ -17,7 +17,7 @@ const FAQS: FAQ[] = [
   },
   {
     q: "Is Transmute free to use?",
-    a: "Yes — there’s no sign-up, no subscription, and no per-file charge. Convert as many files as you like (one at a time, or up to 10 at once with batch).",
+    a: "Yes — there's no sign-up, no subscription, and no per-file charge. Convert as many files as you like (one at a time, or up to 10 at once with batch).",
   },
   {
     q: "Are there file-size limits?",
@@ -25,7 +25,7 @@ const FAQS: FAQ[] = [
   },
   {
     q: "How long does a conversion take?",
-    a: "Most images and documents convert in under a second. Audio and video depend on length and server load — you’ll see a real progress bar while it works.",
+    a: "Most images and documents convert in under a second. Audio and video depend on length and server load — you'll see a real progress bar while it works.",
   },
   {
     q: "Are uploaded files secure?",
@@ -37,7 +37,7 @@ const FAQS: FAQ[] = [
   },
   {
     q: "Why might a conversion fail?",
-    a: "Common causes: the file is corrupted or password-protected, uses an unsupported codec (e.g. HEVC variants), or the requested pair isn’t supported. We’ll show a clear message and the valid alternatives.",
+    a: "Common causes: the file is corrupted or password-protected, uses an unsupported codec (e.g. HEVC variants), or the requested pair isn't supported. We'll show a clear message and the valid alternatives.",
   },
 ];
 

@@ -17,7 +17,7 @@ const POINTS = [
   {
     icon: ShieldCheck,
     title: "Privacy-first",
-    body: "Your files aren’t scanned, indexed, trained on, or shared. You own the input and the output.",
+    body: "Your files aren't scanned, indexed, trained on, or shared. You own the input and the output.",
   },
   {
     icon: UserCheck,

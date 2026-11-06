@@ -49,7 +49,8 @@ export function Navbar() {
 
           <ul className="hidden items-center gap-1 lg:flex">
             {LINKS.map((link) => {
-              const active = pathname === link.href.split("?")[0] && link.href === "/" ? pathname === "/" : false;
+              const isRoot = link.href === "/";
+              const active = isRoot ? pathname === "/" : pathname === link.href.split("?")[0];
               return (
                 <li key={link.label}>
                   <Link
