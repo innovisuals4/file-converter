@@ -4,7 +4,7 @@ import { useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { ChevronDown, HelpCircle } from "lucide-react";
 import { cn } from "@/lib/cn";
-import { Section, SectionHeading } from "@/components/motion-primitives";
+import { Section } from "@/components/motion-primitives";
 
 interface FAQ { q: string; a: string; }
 
@@ -23,15 +23,21 @@ export function FAQ() {
   const [openId, setOpenId] = useState<string | null>(null);
 
   return (
-    <Section className="border-t border-line/40">
-      <SectionHeading
-        eyebrow="Questions?"
-        title="Frequently asked questions"
-        copy="Everything you need to know before converting."
-        align="center"
-      />
+    <Section className="border-t border-line/30">
+      <div className="max-w-3xl mx-auto text-center mb-20">
+        <span className="inline-flex items-center gap-2 rounded-full border border-brand/30 px-3 py-1 text-[11px] font-bold text-brand uppercase tracking-[0.18em] bg-brand/5 backdrop-blur-sm mb-4">
+          <span className="h-1.5 w-1.5 rounded-full bg-brand" />
+          Questions?
+        </span>
+        <h2 className="font-display text-[clamp(2rem,5vw,3rem)] font-black leading-[1.02] tracking-[-0.03em] text-ink mb-3">
+          Frequently asked questions
+        </h2>
+        <p className="text-[clamp(1.05rem,2vw,1.2rem)] leading-relaxed text-muted">
+          Everything you need to know before converting.
+        </p>
+      </div>
 
-      <div className="mt-16 max-w-3xl mx-auto space-y-3">
+      <div className="max-w-3xl mx-auto space-y-3">
         <AnimatePresence>
           {FAQS.map((f) => {
             const isOpen = openId === f.q;
@@ -41,13 +47,13 @@ export function FAQ() {
                 initial={reduce ? false : { opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
-                className="surface-card rounded-2xl overflow-hidden card-hover"
+                className="surface-card rounded-[28px] overflow-hidden card-hover"
               >
                 <button
                   type="button"
                   onClick={() => setOpenId(isOpen ? null : f.q)}
                   aria-expanded={isOpen}
-                  className="flex w-full items-center justify-between px-6 py-4 text-left text-[14px] font-medium text-ink transition-colors hover:bg-surface-2/60"
+                  className="flex w-full items-center justify-between px-6 py-4 text-left text-[14px] font-bold text-ink transition-colors hover:bg-surface-2/60"
                 >
                   <HelpCircle className="h-4 w-4 shrink-0 text-muted mr-3" />
                   <span className="flex-1">{f.q}</span>

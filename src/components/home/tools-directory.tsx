@@ -15,7 +15,7 @@ import {
 import { ExtBadge, FormatIcon } from "@/lib/format-icons";
 import { Button, buttonClasses } from "@/components/ui";
 import { cn } from "@/lib/cn";
-import { Section, SectionHeading } from "@/components/motion-primitives";
+import { Section } from "@/components/motion-primitives";
 
 export interface ToolDirItem {
   from: FormatDef;
@@ -69,13 +69,12 @@ export function ToolTab({ id, label, active, onSelect }: { id: string; label: st
       onClick={() => onSelect(id)}
       aria-pressed={active}
       className={cn(
-        "h-10 px-3.5 rounded-xl flex items-center gap-2 text-[12px] font-medium transition-all duration-300",
+        "h-10 px-4 rounded-xl flex items-center gap-2 text-[11px] font-bold transition-all duration-300 tracking-tight uppercase",
         active
-          ? "bg-gradient-to-br from-brand to-brand-strong text-white shadow-lg"
+          ? "bg-brand text-white shadow-lg shadow-brand/40"
           : "text-muted hover:text-ink hover:bg-surface-2/80 hover:border-brand/20 border-transparent",
       )}
     >
-      <span className={`h-2 w-2 rounded-full ${active ? "bg-white" : "transparent"}`} />
       {label}
     </button>
   );
@@ -89,16 +88,20 @@ export function ToolCard({ from, to }: { from: string; to: string }) {
     <a
       href={`/convert/${from}-to-${to}`}
       className={cn(
-        "block rounded-2xl border border-line surface-card p-5 card-hover hover:border-brand/50 transition-all duration-300",
+        "block rounded-[28px] border border-line surface-card p-6 card-hover hover:border-brand/50 transition-all duration-300",
       )}
     >
-      <div className="flex items-center justify-between gap-2 mb-3">
-        <FormatIcon formatId={f.id} size="sm" className="shrink-0" />
+      <div className="flex items-center justify-between gap-3 mb-4">
+        <div className="h-10 w-10 rounded-[18px] bg-surface-2/80 border border-line flex items-center justify-center group-hover:bg-brand group-hover:text-white transition-all duration-300">
+          <FormatIcon formatId={f.id} size="sm" />
+        </div>
         <ArrowRightMini className="h-3.5 w-3.5 shrink-0 text-brand-strong" />
-        <FormatIcon formatId={t.id} size="sm" className="shrink-0" />
+        <div className="h-10 w-10 rounded-[18px] bg-surface-2/80 border border-line flex items-center justify-center group-hover:bg-accent group-hover:text-white transition-all duration-300">
+          <FormatIcon formatId={t.id} size="sm" />
+        </div>
       </div>
-      <h3 className="mb-1 text-sm font-semibold tracking-[-0.01em] text-ink">{`${f.name} → ${t.name}`}</h3>
-      <div className="flex gap-1.5 text-[10px] uppercase tracking-wider font-semibold">
+      <h3 className="mb-2 text-lg font-black tracking-[-0.01em] text-ink">{`${f.name} → ${t.name}`}</h3>
+      <div className="flex gap-1.5 text-[10px] font-bold text-muted uppercase tracking-wider">
         <ExtBadge formatId={from} />
         <ExtBadge formatId={to} />
       </div>
@@ -148,15 +151,21 @@ export function ToolsDirectory({ initialCategory }: { initialCategory?: string }
 
   return (
     <Section>
-      <SectionHeading
-        eyebrow="Conversion directory"
-        title="Browse every conversion"
-        copy="Searchable directory of every supported format pair. Pick a category, search for your conversion, and go straight to the workspace."
-        align="center"
-      />
+      <div className="max-w-3xl mx-auto text-center mb-16">
+        <span className="inline-flex items-center gap-2 rounded-full border border-brand/30 px-3 py-1 text-[11px] font-bold text-brand uppercase tracking-[0.18em] bg-brand/5 backdrop-blur-sm mb-4">
+          <span className="h-1.5 w-1.5 rounded-full bg-brand" />
+          Conversion directory
+        </span>
+        <h2 className="font-display text-[clamp(2rem,5vw,3rem)] font-black leading-[1.02] tracking-[-0.03em] text-ink mb-3">
+          Browse every conversion
+        </h2>
+        <p className="text-[clamp(1.05rem,2vw,1.2rem)] leading-relaxed text-muted">
+          Searchable directory of every supported format pair. Pick a category, search for your conversion, and go straight to the workspace.
+        </p>
+      </div>
 
       <div className="mt-14 flex flex-wrap items-center justify-between gap-4">
-        <div className="flex max-w-[420px] items-center gap-2 rounded-xl border border-line surface-card px-3 py-3">
+        <div className="flex max-w-[420px] items-center gap-2 rounded-[20px] border border-line surface-card px-4 py-3">
           <Search className="h-4 w-4 shrink-0 text-faint" />
           <input
             value={query}
@@ -166,7 +175,7 @@ export function ToolsDirectory({ initialCategory }: { initialCategory?: string }
             className="w-full bg-transparent outline-none placeholder:text-faint text-sm"
           />
         </div>
-        <div className="flex flex-wrap gap-1.5 overflow-x-auto pb-1 no-scrollbar">
+        <div className="flex flex-wrap gap-2 overflow-x-auto pb-1 no-scrollbar">
           {TOOL_TABS.map((t) => (
             <ToolTab
               key={t.id}
@@ -180,36 +189,36 @@ export function ToolsDirectory({ initialCategory }: { initialCategory?: string }
       </div>
 
       {filteredGroups.length === 0 && (
-        <div className="mt-12 glass rounded-3xl p-12 text-center border border-line">
-          <div className="inline-flex items-center justify-center rounded-full h-16 w-16 bg-brand-soft mb-5">
-            <Search className="h-8 w-8 text-brand-strong" />
+        <div className="mt-16 glass rounded-[40px] p-16 text-center border border-line">
+          <div className="inline-flex items-center justify-center rounded-full h-20 w-20 bg-brand-soft mb-6">
+            <Search className="h-10 w-10 text-brand-strong" />
           </div>
-          <h3 className="mb-2 text-lg font-semibold text-ink">No results</h3>
+          <h3 className="mb-3 text-xl font-black text-ink">No results</h3>
           <p className="text-muted">
             {query ? `“{query}”` : ""} didn’t match any supported conversion.
           </p>
-          <Button variant="ghost" size="sm" onClick={() => setQuery("")} className="mt-4">
+          <Button variant="ghost" size="sm" onClick={() => setQuery("")} className="mt-6">
             Clear search
           </Button>
         </div>
       )}
 
-      <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
         <AnimatePresence>
           {filteredGroups.map((g) => (
             <motion.div
               key={g.label}
-              initial={reduce ? false : { opacity: 0, y: 10 }}
+              initial={reduce ? false : { opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -6 }}
-              className="surface-card rounded-3xl p-6 sm:p-8 card-hover"
+              exit={{ opacity: 0, y: -8 }}
+              className="surface-card rounded-[32px] p-7 sm:p-10 card-hover"
             >
-              <div className="flex items-center gap-2 mb-5">
-                <div className="h-2 w-2 rounded-full bg-gradient-to-r from-brand to-accent" />
-                <h3 className="text-sm font-semibold uppercase tracking-[0.12em] text-muted">{g.label}</h3>
-                <span className="ml-auto text-[11px] font-medium text-faint">{g.items.length} conversions</span>
+              <div className="flex items-center gap-3 mb-6">
+                <div className="h-3 w-3 rounded-full bg-gradient-to-r from-brand to-accent" />
+                <h3 className="text-sm font-black uppercase tracking-[0.16em] text-muted">{g.label}</h3>
+                <span className="ml-auto text-[11px] font-bold text-faint">{g.items.length}</span>
               </div>
-              <div className="grid gap-3">
+              <div className="grid gap-4">
                 {g.items.map((item) => (
                   <ToolCard key={`${item.from.id}-to-${item.to.id}`} from={item.from.id} to={item.to.id} />
                 ))}
@@ -225,14 +234,20 @@ export function ToolsDirectory({ initialCategory }: { initialCategory?: string }
 export function ToolsCategoryShortcuts() {
   return (
     <Section>
-      <SectionHeading
-        eyebrow="Browse all tools"
-        title="Browse every conversion"
-        copy="Searchable directory of supported format paths across categories."
-        align="center"
-      />
+      <div className="max-w-3xl mx-auto text-center mb-20">
+        <span className="inline-flex items-center gap-2 rounded-full border border-brand/30 px-3 py-1 text-[11px] font-bold text-brand uppercase tracking-[0.18em] bg-brand/5 backdrop-blur-sm mb-4">
+          <span className="h-1.5 w-1.5 rounded-full bg-brand" />
+          Browse all tools
+        </span>
+        <h2 className="font-display text-[clamp(2rem,5vw,3rem)] font-black leading-[1.02] tracking-[-0.03em] text-ink mb-3">
+          Browse every conversion
+        </h2>
+        <p className="text-[clamp(1.05rem,2vw,1.2rem)] leading-relaxed text-muted">
+          Searchable directory of supported format paths across categories.
+        </p>
+      </div>
 
-      <div className="mt-14 grid gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+      <div className="grid gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
         {[...TOOL_TABS].slice(1).map((t) => (
           <Link
             key={t.id}

@@ -5,7 +5,25 @@ import { motion, useReducedMotion, useInView, animate } from "motion/react";
 import { cn } from "@/lib/cn";
 
 /* ------------------------------------------------------------------ */
-/* Scroll reveal                                                       */
+/* Section wrapper (bold neon page sections)                          */
+/* ------------------------------------------------------------------ */
+
+export function Section({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <section className={cn("py-24 lg:pt-32 lg:pb-40 border-t border-line relative overflow-hidden", className)}>
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">{children}</div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Scroll reveal                                                      */
 /* ------------------------------------------------------------------ */
 
 interface RevealProps {
@@ -32,7 +50,7 @@ export function Reveal({ children, delay = 0, y = 26, className, once = true }: 
 }
 
 /* ------------------------------------------------------------------ */
-/* Staggered word reveal (hero headline)                               */
+/* Staggered word reveal (hero headline)                              */
 /* ------------------------------------------------------------------ */
 
 export function StaggerWords({
@@ -45,7 +63,6 @@ export function StaggerWords({
   text: string;
   className?: string;
   wordClassName?: string;
-  /** Words at this index and beyond get the gradient treatment. */
   gradientFromIndex?: number;
   delay?: number;
 }) {
@@ -78,7 +95,7 @@ export function StaggerWords({
 }
 
 /* ------------------------------------------------------------------ */
-/* Magnetic hover wrapper                                              */
+/* Magnetic hover wrapper                                             */
 /* ------------------------------------------------------------------ */
 
 export function Magnetic({
@@ -119,7 +136,7 @@ export function Magnetic({
 }
 
 /* ------------------------------------------------------------------ */
-/* Animated counter (stats)                                            */
+/* Animated counter (stats)                                           */
 /* ------------------------------------------------------------------ */
 
 export function Counter({
@@ -141,8 +158,7 @@ export function Counter({
   useEffect(() => {
     if (!inView) return;
     if (reduce) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect -- Immediate set for reduced-motion users (no animation)
-      setValue(to);
+      setTimeout(() => setValue(to), 0);
       return;
     }
     const controls = animate(0, to, {
@@ -162,25 +178,7 @@ export function Counter({
 }
 
 /* ------------------------------------------------------------------ */
-/* Section wrapper (shared layout for every page section)             */
-/* ------------------------------------------------------------------ */
-
-export function Section({
-  children,
-  className,
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) {
-  return (
-    <section className={cn("py-20 lg:pt-28 lg:pb-36 border-t border-line/40", className)}>
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">{children}</div>
-    </section>
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/* Section heading kit                                                 */
+/* Section headline kit                                               */
 /* ------------------------------------------------------------------ */
 
 export function SectionHeading({
@@ -197,29 +195,23 @@ export function SectionHeading({
   className?: string;
 }) {
   return (
-    <div
-      className={cn(
-        "max-w-2xl",
-        align === "center" ? "mx-auto text-center" : "text-left",
-        className,
-      )}
-    >
+    <div className={cn("max-w-2xl", align === "center" ? "mx-auto text-center" : "text-left", className)}>
       {eyebrow && (
         <Reveal>
-          <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 text-[12px] font-medium uppercase tracking-[0.14em] text-muted">
-            <span className="h-1.5 w-1.5 rounded-full bg-gradient-to-r from-violet-500 to-sky-400" />
+          <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-brand/30 px-3 py-1 text-[11px] font-bold text-brand uppercase tracking-[0.18em] bg-brand/5 backdrop-blur-sm">
+            <span className="h-1.5 w-1.5 rounded-full bg-brand" />
             {eyebrow}
           </span>
         </Reveal>
       )}
       <Reveal delay={0.06}>
-        <h2 className="font-display text-[clamp(1.75rem,3.6vw,2.6rem)] font-semibold leading-[1.12] tracking-[-0.025em] text-ink">
+        <h2 className="font-display text-[clamp(2rem,5vw,3.5rem)] font-black leading-[1.02] tracking-[-0.03em] text-ink">
           {title}
         </h2>
       </Reveal>
       {copy && (
         <Reveal delay={0.12}>
-          <p className="mt-4 text-[15px] leading-relaxed text-muted md:text-base">{copy}</p>
+          <p className="mt-4 text-[clamp(1.05rem,2vw,1.2rem)] leading-relaxed text-muted max-w-xl">{copy}</p>
         </Reveal>
       )}
     </div>

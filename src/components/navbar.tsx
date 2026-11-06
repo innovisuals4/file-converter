@@ -53,7 +53,7 @@ export function Navbar() {
                   <Link
                     href={link.href}
                     className={cn(
-                      "px-3 py-2 text-[13.5px] font-medium transition-colors",
+                      "px-3 py-2 text-[13px] font-bold transition-colors tracking-tight uppercase",
                       active ? "text-brand-strong" : "text-muted hover:text-ink",
                     )}
                   >
@@ -66,13 +66,13 @@ export function Navbar() {
 
           <div className="flex items-center gap-2.5">
             <ThemeToggle />
-            <LinkButton href="/#convert" size="sm" className="hidden sm:inline-flex">
+            <LinkButton href="/#convert" size="sm" className="hidden sm:inline-flex variant-neon">
               Start Converting
               <ArrowRight className="h-4 w-4" />
             </LinkButton>
             <button
               type="button"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-line text-muted lg:hidden"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-[20px] border border-line text-muted lg:hidden"
               aria-expanded={open}
               aria-controls="mobile-nav"
               aria-label="Toggle navigation menu"
@@ -92,21 +92,21 @@ export function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
-            className="glass mx-4 mt-2 overflow-hidden rounded-2xl lg:hidden border border-line"
+            className="glass mx-4 mt-2 overflow-hidden rounded-[32px] lg:hidden border border-line"
           >
             <ul className="p-3">
               {LINKS.map((link) => (
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="block rounded-xl px-4 py-3 text-[15px] font-medium text-muted transition-colors hover:bg-surface-2/80 hover:text-ink"
+                    className="block rounded-[28px] px-4 py-3 text-[15px] font-bold text-muted transition-colors hover:bg-surface-2/80 hover:text-ink tracking-tight uppercase"
                   >
                     {link.label}
                   </Link>
                 </li>
               ))}
               <li className="mt-2 border-t border-line pt-3">
-                <LinkButton href="/#convert" className="w-full">
+                <LinkButton href="/#convert" className="w-full variant-neon">
                   Start Converting
                   <ArrowRight className="h-4 w-4" />
                 </LinkButton>
