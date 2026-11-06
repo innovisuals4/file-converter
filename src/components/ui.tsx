@@ -1,9 +1,5 @@
 import { cn } from "@/lib/cn";
 
-export function cn2(...classes: Array<string | false | null | undefined>): string {
-  return classes.filter(Boolean).join(" ");
-}
-
 type ButtonVariant = "primary" | "secondary" | "ghost";
 type ButtonSize = "md" | "lg" | "sm";
 
