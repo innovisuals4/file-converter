@@ -568,17 +568,13 @@ function buildRoutes(): RouteDef[] {
   add({ from: "gz", to: "zip", engine: "archive", options: [], note: "Decompresses the gzip stream and repackages it as ZIP." });
   add({ from: "gz", to: "tar", engine: "archive", options: [], note: "Decompresses the gzip stream (tar.gz becomes a plain TAR)." });
 
-  // Package any single file into a ZIP (honest, useful "compress" route).
+  // Package any single file into a ZIP — kept only for archive-native formats.
+  // Removed auto-generated "Format → ZIP" routes for every format to reduce
+  // directory clutter; these are not real format conversions.
   const archiveIds = new Set(["zip", "tar", "gz"]);
   for (const f of FORMATS) {
-    if (archiveIds.has(f.id)) continue;
-    add({
-      from: f.id,
-      to: "zip",
-      engine: "package",
-      options: [],
-      note: "Your file is packaged into a ZIP archive.",
-    });
+    if (!archiveIds.has(f.id)) continue;
+    // archive-to-zip routes are already added explicitly above
   }
 
   /* PDF Manipulation ----------------------------------------------------------------- */
