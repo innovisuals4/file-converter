@@ -2,7 +2,6 @@
 
 import { SectionHeading } from "@/components/motion-primitives";
 import { ConverterWorkspace } from "@/components/workspace/converter";
-import { LinkButton } from "@/components/ui";
 
 interface RouteNote {
   note?: string;
