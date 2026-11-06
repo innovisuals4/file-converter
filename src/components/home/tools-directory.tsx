@@ -44,10 +44,20 @@ export function buildToolGroups(): ToolGroup[] {
     });
     map.set(fromFmt.id, items.filter((x): x is ToolDirItem => x !== null));
   }
-  const groups: ToolGroup[] = [];
+  // Merge all formats that share a category into a single group.
+  // Grouping by format ID created duplicate category labels (e.g. 10× "IMAGES"),
+  // which broke React key reconciliation and made tab filtering not work.
+  const categoryMap = new Map<string, ToolDirItem[]>();
   for (const [fromId, items] of map.entries()) {
     const f = formatById(fromId)!;
-    groups.push({ label: CATEGORY_META[f.category].label, items });
+    const cat = CATEGORY_META[f.category].label;
+    const existing = categoryMap.get(cat) ?? [];
+    existing.push(...items);
+    categoryMap.set(cat, existing);
+  }
+  const groups: ToolGroup[] = [];
+  for (const [label, items] of categoryMap.entries()) {
+    groups.push({ label, items });
   }
   groups.sort((a, b) => a.label.localeCompare(b.label));
   return groups;
